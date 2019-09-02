@@ -1,8 +1,8 @@
 ﻿using System;
-
 using Microsoft.AspNetCore.Http;
+using ProblemNet.Problems;
 
-namespace ProblemNet
+namespace ProblemNet.Exceptions
 {
     public class InternalServerException : StatusCodeProblemDetails
     {

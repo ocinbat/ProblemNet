@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -11,9 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
 
-using static System.String;
-
-namespace ProblemNet
+namespace ProblemNet.Extensions
 {
     public static class HttpContextExtensions
     {
@@ -35,7 +32,7 @@ namespace ProblemNet
 
         public static Task WriteProblemDetailsAsync(this HttpContext context, ProblemDetails details)
         {
-            if (IsNullOrWhiteSpace(details.Instance))
+            if (String.IsNullOrWhiteSpace(details.Instance))
             {
                 details.Instance = context.Request.Path;
             }

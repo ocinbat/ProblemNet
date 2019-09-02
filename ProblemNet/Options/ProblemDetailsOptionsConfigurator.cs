@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace ProblemNet
+namespace ProblemNet.Options
 {
     public class ProblemDetailsOptionsConfigurator : IConfigureOptions<ProblemDetailsOptions>
     {

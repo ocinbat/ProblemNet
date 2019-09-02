@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace ProblemNet
+namespace ProblemNet.Problems
 {
     public class ValidationProblem
     {

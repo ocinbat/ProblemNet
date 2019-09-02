@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using ProblemNet;
-
+using ProblemNet.Extensions;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace ProblemsApi
@@ -28,7 +28,10 @@ namespace ProblemsApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddProblemDetails(cfg => { cfg.DefaultTypeBaseUri = "https://userservice.com/problemdetails/"; });
+            services.AddProblemDetails(cfg =>
+            {
+                cfg.DefaultTypeBaseUri = "https://userservice.com/problemdetails/";
+            });
 
             services.AddMvc().
                      SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

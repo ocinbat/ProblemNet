@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-
+using ProblemNet.Exceptions;
+using ProblemNet.Extensions;
+using ProblemNet.Options;
 using static System.String;
 
 namespace ProblemNet
@@ -15,16 +15,14 @@ namespace ProblemNet
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<ProblemDetailsMiddleware> _logger;
-        private readonly IHostingEnvironment _environment;
         private readonly ProblemDetailsOptions _options;
+
         public ProblemDetailsMiddleware(RequestDelegate next,
                                         ILogger<ProblemDetailsMiddleware> logger,
-                                        IHostingEnvironment environment,
                                         IOptions<ProblemDetailsOptions> options)
         {
             _next = next;
             _logger = logger;
-            _environment = environment;
             _options = options.Value;
         }
 

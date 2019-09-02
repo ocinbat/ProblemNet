@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ProblemNet
+namespace ProblemNet.ActionsResults
 {
     public class InternalServerErrorObjectResult : ObjectResult
     {

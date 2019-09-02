@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace ProblemNet
+namespace ProblemNet.Extensions
 {
     public static class MiddlewareExtensions
     {

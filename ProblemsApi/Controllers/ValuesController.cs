@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 using ProblemNet;
+using ProblemNet.Exceptions;
 
 namespace ProblemsApi.Controllers
 {

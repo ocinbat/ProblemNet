@@ -1,8 +1,7 @@
 ﻿using System;
-
 using Microsoft.AspNetCore.Http;
 
-namespace ProblemNet
+namespace ProblemNet.Options
 {
     public class ProblemDetailsOptions
     {

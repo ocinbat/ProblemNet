@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
 using Newtonsoft.Json;
 
-namespace ProblemNet
+namespace ProblemNet.Exceptions
 {
     public class ProblemDetailsException : Exception
     {
