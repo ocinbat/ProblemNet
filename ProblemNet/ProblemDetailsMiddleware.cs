@@ -1,0 +1,85 @@
+﻿using System;
+using System.Net;
+using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+
+using static System.String;
+
+namespace ProblemNet
+{
+    public class ProblemDetailsMiddleware
+    {
+        private readonly RequestDelegate _next;
+        private readonly ILogger<ProblemDetailsMiddleware> _logger;
+        private readonly IHostingEnvironment _environment;
+        private readonly ProblemDetailsOptions _options;
+        public ProblemDetailsMiddleware(RequestDelegate next,
+                                        ILogger<ProblemDetailsMiddleware> logger,
+                                        IHostingEnvironment environment,
+                                        IOptions<ProblemDetailsOptions> options)
+        {
+            _next = next;
+            _logger = logger;
+            _environment = environment;
+            _options = options.Value;
+        }
+
+        public async Task Invoke(HttpContext context)
+        {
+            try
+            {
+                await _next(context);
+            }
+            catch (Exception exception)
+            {
+                if (context.Response.HasStarted)
+                {
+                    _logger.LogWarning("The response has already started, the problem details middleware will not be executed.");
+                    throw;
+                }
+
+                Log(exception);
+
+                context.ClearResponse(StatusCodes.Status500InternalServerError);
+
+                if (exception is ProblemDetailsException problem)
+                {
+                    if (!IsNullOrWhiteSpace(_options.DefaultTypeBaseUri))
+                    {
+                        problem.ProblemDetails.Type = $"{_options.DefaultTypeBaseUri.TrimEnd('/')}/{problem.ProblemDetails.Type}";
+                    }
+
+                    await context.WriteProblemDetailsAsync(problem.ProblemDetails);
+                    return;
+                }
+
+                var internalServerException = new InternalServerException(exception, _options.DisplayUnhandledExceptionDetails(context));
+                await context.WriteProblemDetailsAsync(internalServerException);
+
+            }
+        }
+
+        private void Log(Exception exception)
+        {
+            if (exception is ProblemDetailsException problemDetailsException)
+            {
+                if (problemDetailsException.ProblemDetails.Status < (int)HttpStatusCode.InternalServerError && problemDetailsException.ProblemDetails.Status >= (int)HttpStatusCode.BadRequest)
+                {
+                    _logger.LogInformation(new EventId(exception.HResult), exception, exception.Message);
+                }
+                else
+                {
+                    _logger.LogError(new EventId(exception.HResult), exception, exception.Message);
+                }
+            }
+            else
+            {
+                _logger.LogError(new EventId(exception.HResult), exception, exception.Message);
+            }
+        }
+    }
+}
