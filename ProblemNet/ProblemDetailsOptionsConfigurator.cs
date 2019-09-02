@@ -17,7 +17,6 @@ namespace ProblemNet
 
         private static bool DisplayUnhandledExceptionDetails(HttpContext context)
         {
-            return false;
             return context.RequestServices.GetRequiredService<IHostingEnvironment>().IsDevelopment();
         }
     }
